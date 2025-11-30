@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Final</string>
+    <string name="add_medication_content_desc">Adicionar Medicamento</string>
+    <string name="edit_medication">Editar Medicamento</string>
+    <string name="add_medication">Cadastrar Medicamento</string>
+    <string name="delete_medication_title">Excluir Medicamento</string>
+    <string name="delete_medication_message">Tem certeza que deseja excluir este medicamento?</string>
+    <string name="delete">Excluir</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="medication_deleted">Medicamento excluído</string>
+    <string name="medication_updated">Medicamento atualizado</string>
+    <string name="medication_added">Medicamento cadastrado com sucesso!</string>
+    <string name="name_and_time_required">Nome e horário são obrigatórios</string>
+    <string name="medication_name_hint">Medicamento</string>
+    <string name="medication_description_hint">Descrição</string>
+    <string name="medication_time_hint">Horário</string>
+    <string name="select_time">Selecionar Horário</string>
+    <string name="medication_name_required">Preencha o nome do medicamento</string>
+    <string name="medication_description_required">Preencha a descrição</string>
+    <string name="medication_time_required">Preencha o horário</string>
+    <string name="taken">Tomado</string>
+</resources>

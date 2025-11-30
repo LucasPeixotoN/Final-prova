@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Final</string>
+    <string name="add_medication_content_desc">Add Medication</string>
+    <string name="edit_medication">Edit Medication</string>
+    <string name="add_medication">Register Medication</string>
+    <string name="delete_medication_title">Delete Medication</string>
+    <string name="delete_medication_message">Are you sure you want to delete this medication?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="medication_deleted">Medication deleted</string>
+    <string name="medication_updated">Medication updated</string>
+    <string name="medication_added">Medication successfully registered!</string>
+    <string name="name_and_time_required">Name and time are required</string>
+    <string name="medication_name_hint">Medication</string>
+    <string name="medication_description_hint">Description</string>
+    <string name="medication_time_hint">Time</string>
+    <string name="select_time">Select Time</string>
+    <string name="medication_name_required">Please fill in the medication name</string>
+    <string name="medication_description_required">Please fill in the description</string>
+    <string name="medication_time_required">Please fill in the time</string>
+    <string name="taken">Taken</string>
+</resources>
