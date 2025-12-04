@@ -7,7 +7,7 @@ public class Medicamento {
     private boolean tomado;
 
     public Medicamento() {
-        // Construtor vazio necessário para Firebase
+        
     }
 
     public Medicamento(String nome, String descricao, String horario, boolean tomado) {
@@ -48,4 +48,5 @@ public class Medicamento {
     public void setTomado(boolean tomado) {
         this.tomado = tomado;
     }
+
 }
