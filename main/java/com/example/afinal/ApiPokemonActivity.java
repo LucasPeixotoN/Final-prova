@@ -51,10 +51,8 @@ public class ApiPokemonActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         buttonLoadMore.setEnabled(false);
 
-        // Gera ID aleatório entre 1 e 898
         int pokemonId = random.nextInt(898) + 1;
 
-        // Busca em thread separada
         new Thread(() -> {
             try {
                 String urlString = "https://pokeapi.co/api/v2/pokemon/" + pokemonId;
@@ -75,15 +73,12 @@ public class ApiPokemonActivity extends AppCompatActivity {
                     }
                     reader.close();
 
-                    // Parse JSON
                     JSONObject jsonObject = new JSONObject(response.toString());
                     String nomePokemon = jsonObject.getString("name");
 
-                    // Capitalizar primeira letra
                     String nomeFormatado = nomePokemon.substring(0, 1).toUpperCase()
                             + nomePokemon.substring(1);
 
-                    // Atualizar UI na thread principal
                     runOnUiThread(() -> {
                         pokemonList.add("🔴 " + nomeFormatado);
                         adapter.notifyDataSetChanged();
@@ -114,4 +109,5 @@ public class ApiPokemonActivity extends AppCompatActivity {
             }
         }).start();
     }
+
 }
