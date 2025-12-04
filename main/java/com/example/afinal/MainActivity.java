@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
         btnSalvar = findViewById(R.id.novoMed);
         btnPokemon = findViewById(R.id.pokemon);
 
-        // Solicitar permissões necessárias para notificações
         solicitarPermissoes();
 
         setUpRecyclerView();
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
         editTHorario.setOnClickListener(v -> showTimePickerDialog());
         btnSalvar.setOnClickListener(v -> salvarMedicamento());
 
-        // Botão para abrir a tela de Pokemon (mantido do código original)
         btnPokemon.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, ApiPokemonActivity.class);
             startActivity(intent);
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
     }
 
     private void solicitarPermissoes() {
-        // Permissão de notificações (Android 13+)
+    
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ContextCompat.checkSelfPermission(this,
                     Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -83,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
             }
         }
 
-        // Permissão de alarmes exatos (Android 12+)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null && !alarmManager.canScheduleExactAlarms()) {
@@ -143,23 +140,22 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
         }
 
         if (snapshotParaEditar != null) {
-            // Atualizar medicamento existente
+       
             String documentId = snapshotParaEditar.getId();
             snapshotParaEditar.getReference().set(new Medicamento(nome, descricao, horario, tomado));
             Toast.makeText(this, "Medicamento atualizado", Toast.LENGTH_SHORT).show();
 
-            // Reagendar notificação com os novos dados
             agendarNotificacao(nome, descricao, horario, documentId);
 
             snapshotParaEditar = null;
             btnSalvar.setText("Cadastrar");
 
         } else {
-            // Adicionar novo medicamento
+    
             medicamentosRef.add(new Medicamento(nome, descricao, horario, tomado))
                     .addOnSuccessListener(documentReference -> {
                         String documentId = documentReference.getId();
-                        // Agendar notificação para o novo medicamento
+           
                         agendarNotificacao(nome, descricao, horario, documentId);
                         Toast.makeText(this, R.string.medication_added, Toast.LENGTH_SHORT).show();
                     })
@@ -168,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
                     });
         }
 
-        // Limpar campos
+       
         editMedicamento.setText("");
         editDescricao.setText("");
         editTHorario.setText("");
@@ -177,30 +173,26 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
 
     private void agendarNotificacao(String nome, String descricao, String horario, String documentId) {
         try {
-            // Separar hora e minuto do formato HH:mm
+            
             String[] timeParts = horario.split(":");
             int hour = Integer.parseInt(timeParts[0]);
             int minute = Integer.parseInt(timeParts[1]);
 
-            // Configurar calendário com o horário escolhido
             Calendar calendar = Calendar.getInstance();
             calendar.set(Calendar.HOUR_OF_DAY, hour);
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
 
-            // Se o horário já passou hoje, agendar para amanhã
             if (calendar.getTimeInMillis() <= System.currentTimeMillis()) {
                 calendar.add(Calendar.DAY_OF_YEAR, 1);
             }
 
-            // Criar intent para o AlarmReceiver
             Intent intent = new Intent(this, AlarmReceiver.class);
             intent.putExtra("medicamento_nome", nome);
             intent.putExtra("medicamento_descricao", descricao);
             intent.putExtra("medicamento_id", documentId);
 
-            // Usar o hash do documentId como requestCode para permitir múltiplos alarmes
             int requestCode = documentId.hashCode();
 
             PendingIntent pendingIntent = PendingIntent.getBroadcast(
@@ -210,20 +202,19 @@ public class MainActivity extends AppCompatActivity implements MedicamentoAdapte
                     PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
             );
 
-            // Obter AlarmManager
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
             if (alarmManager != null) {
-                // Agendar alarme exato
+            
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    // Android 6.0+ - setExactAndAllowWhileIdle para funcionar em Doze mode
+                 
                     alarmManager.setExactAndAllowWhileIdle(
                             AlarmManager.RTC_WAKEUP,
                             calendar.getTimeInMillis(),
                             pendingIntent
                     );
                 } else {
-                    // Android 5.1 e anteriores
+      
                     alarmManager.setExact(
                             AlarmManager.RTC_WAKEUP,
                             calendar.getTimeInMillis(),
